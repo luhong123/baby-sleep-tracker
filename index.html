@@ -4,9 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>宝宝睡眠记录</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
@@ -38,6 +35,19 @@
             </div>
         </div>
 
+        <div class="records-section">
+            <div class="section-header">
+                <h2>睡眠记录</h2>
+                <button id="clearAll" class="btn-text">清空所有</button>
+            </div>
+            <div id="recordsList" class="records-list">
+                <div class="empty-state">
+                    <p>还没有睡眠记录</p>
+                    <p class="empty-hint">添加第一条记录开始追踪宝宝的睡眠吧</p>
+                </div>
+            </div>
+        </div>
+
         <div class="card add-record-card">
             <h2>添加睡眠记录</h2>
             <form id="sleepForm">
@@ -63,19 +73,6 @@
 
                 <button type="submit" class="btn-primary">保存记录</button>
             </form>
-        </div>
-
-        <div class="records-section">
-            <div class="section-header">
-                <h2>睡眠记录</h2>
-                <button id="clearAll" class="btn-text">清空所有</button>
-            </div>
-            <div id="recordsList" class="records-list">
-                <div class="empty-state">
-                    <p>还没有睡眠记录</p>
-                    <p class="empty-hint">添加第一条记录开始追踪宝宝的睡眠吧</p>
-                </div>
-            </div>
         </div>
     </div>
 

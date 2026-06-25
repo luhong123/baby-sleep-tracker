@@ -213,14 +213,14 @@ function updateChart() {
             datasets: [{
                 label: '睡眠时长（小时）',
                 data: data,
-                borderColor: '#3C5A78',
-                backgroundColor: 'rgba(60, 90, 120, 0.1)',
-                borderWidth: 2,
+                borderColor: '#007AFF',
+                backgroundColor: 'rgba(0, 122, 255, 0.08)',
+                borderWidth: 2.5,
                 fill: true,
-                tension: 0.3,
-                pointRadius: 4,
-                pointHoverRadius: 6,
-                pointBackgroundColor: '#3C5A78',
+                tension: 0.4,
+                pointRadius: 5,
+                pointHoverRadius: 7,
+                pointBackgroundColor: '#007AFF',
                 pointBorderColor: '#FFFFFF',
                 pointBorderWidth: 2
             }]
@@ -233,13 +233,22 @@ function updateChart() {
                     display: false
                 },
                 tooltip: {
-                    backgroundColor: '#1E2227',
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
                     padding: 12,
                     titleColor: '#FFFFFF',
                     bodyColor: '#FFFFFF',
-                    borderColor: '#E7E3DA',
-                    borderWidth: 1,
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    borderWidth: 0,
                     displayColors: false,
+                    cornerRadius: 8,
+                    titleFont: {
+                        size: 13,
+                        weight: '600'
+                    },
+                    bodyFont: {
+                        size: 15,
+                        weight: '400'
+                    },
                     callbacks: {
                         label: function(context) {
                             return `${context.parsed.y.toFixed(1)} 小时`;
@@ -251,13 +260,13 @@ function updateChart() {
                 y: {
                     beginAtZero: true,
                     grid: {
-                        color: '#E7E3DA',
+                        color: 'rgba(60, 60, 67, 0.12)',
                         drawBorder: false
                     },
                     ticks: {
-                        color: '#6B7077',
+                        color: '#8E8E93',
                         font: {
-                            size: 12
+                            size: 13
                         },
                         callback: function(value) {
                             return value + 'h';
@@ -270,9 +279,9 @@ function updateChart() {
                         drawBorder: false
                     },
                     ticks: {
-                        color: '#6B7077',
+                        color: '#8E8E93',
                         font: {
-                            size: 12
+                            size: 13
                         }
                     }
                 }

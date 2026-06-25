@@ -5,26 +5,26 @@
 }
 
 :root {
-    --bg-primary: #F7F5F1;
+    --bg-primary: #F2F2F7;
     --bg-surface: #FFFFFF;
-    --border-color: #E7E3DA;
-    --text-primary: #1E2227;
-    --text-muted: #6B7077;
-    --accent: #3C5A78;
-    --accent-hover: #2E4760;
-    --danger: #C84C47;
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
-    --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --border-color: rgba(60, 60, 67, 0.12);
+    --text-primary: #000000;
+    --text-muted: #8E8E93;
+    --accent: #007AFF;
+    --accent-hover: #0051D5;
+    --danger: #FF3B30;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', 'Helvetica Neue', sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
-    line-height: 1.6;
+    line-height: 1.47;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    padding: 20px 16px;
+    padding: 16px;
 }
 
 .container {
@@ -38,77 +38,80 @@ header {
 }
 
 h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-size: 34px;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
     color: var(--text-primary);
 }
 
 .subtitle {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--text-muted);
+    font-weight: 400;
 }
 
 h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    font-size: 22px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 .card {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 24px;
+    border-radius: 16px;
+    padding: 20px;
     box-shadow: var(--shadow-sm);
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 8px;
-    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--text-muted);
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px 16px;
-    font-size: 16px;
-    font-family: 'Inter', sans-serif;
+    padding: 11px 14px;
+    font-size: 17px;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--bg-surface);
     color: var(--text-primary);
-    transition: border-color 0.2s;
+    transition: all 0.2s;
 }
 
 .form-group input:focus {
     outline: none;
     border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
 .btn-primary {
     width: 100%;
-    padding: 14px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    font-family: 'Inter', sans-serif;
+    padding: 13px 20px;
+    font-size: 17px;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     background: var(--accent);
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 10px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.2s;
 }
 
 .btn-primary:hover {
@@ -116,29 +119,33 @@ h2 {
 }
 
 .btn-primary:active {
-    transform: translateY(1px);
+    transform: scale(0.98);
 }
 
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .btn-text {
     background: none;
     border: none;
-    color: var(--text-muted);
-    font-size: 14px;
-    font-weight: 500;
+    color: var(--accent);
+    font-size: 15px;
+    font-weight: 400;
     cursor: pointer;
     padding: 4px 8px;
-    transition: color 0.2s;
+    transition: opacity 0.2s;
 }
 
 .btn-text:hover {
-    color: var(--danger);
+    opacity: 0.7;
+}
+
+.btn-text:active {
+    opacity: 0.5;
 }
 
 .records-list {
@@ -150,7 +157,7 @@ h2 {
 .record-item {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 16px;
     box-shadow: var(--shadow-sm);
 }
@@ -163,7 +170,7 @@ h2 {
 }
 
 .record-date {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 600;
     color: var(--text-primary);
 }
@@ -171,15 +178,19 @@ h2 {
 .btn-delete {
     background: none;
     border: none;
-    color: var(--text-muted);
-    font-size: 14px;
+    color: var(--danger);
+    font-size: 15px;
     cursor: pointer;
     padding: 4px 8px;
-    transition: color 0.2s;
+    transition: opacity 0.2s;
 }
 
 .btn-delete:hover {
-    color: var(--danger);
+    opacity: 0.7;
+}
+
+.btn-delete:active {
+    opacity: 0.5;
 }
 
 .record-times {
@@ -193,14 +204,14 @@ h2 {
 }
 
 .time-label {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-muted);
     margin-bottom: 4px;
 }
 
 .time-value {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 600;
     color: var(--text-primary);
 }
 
@@ -208,19 +219,18 @@ h2 {
     display: inline-flex;
     align-items: center;
     padding: 6px 12px;
-    background: var(--bg-primary);
-    border-radius: 6px;
-    font-size: 14px;
+    background: rgba(0, 122, 255, 0.08);
+    border-radius: 8px;
+    font-size: 15px;
     font-weight: 500;
     color: var(--accent);
     margin-bottom: 8px;
 }
 
 .record-note {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
     margin-top: 8px;
-    font-style: italic;
 }
 
 .empty-state {
@@ -230,49 +240,54 @@ h2 {
 }
 
 .empty-state p {
-    font-size: 16px;
+    font-size: 17px;
     margin-bottom: 8px;
 }
 
 .empty-hint {
-    font-size: 14px;
+    font-size: 15px;
     opacity: 0.8;
 }
 
 .stats-card {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
 }
 
 .stats-summary {
     display: flex;
-    gap: 16px;
-    margin-bottom: 32px;
+    gap: 12px;
+    margin-bottom: 24px;
 }
 
 .stat-item {
     flex: 1;
     text-align: center;
-    padding: 16px;
+    padding: 16px 12px;
     background: var(--bg-primary);
-    border-radius: 8px;
+    border-radius: 12px;
 }
 
 .stat-label {
     font-size: 13px;
     color: var(--text-muted);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
+    font-weight: 400;
 }
 
 .stat-value {
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
     color: var(--accent);
 }
 
 .chart-container {
     position: relative;
-    height: 280px;
-    margin-top: 20px;
+    height: 260px;
+    margin-top: 16px;
+}
+
+.records-section {
+    margin-bottom: 16px;
 }
 
 @media (max-width: 480px) {
@@ -281,7 +296,7 @@ h2 {
     }
 
     .card {
-        padding: 20px;
+        padding: 16px;
     }
 
     .record-times {
@@ -291,10 +306,10 @@ h2 {
 
     .stats-summary {
         flex-direction: column;
-        gap: 12px;
+        gap: 8px;
     }
 
     .chart-container {
-        height: 240px;
+        height: 220px;
     }
 }
