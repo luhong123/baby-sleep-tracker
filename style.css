@@ -24,7 +24,12 @@ body {
     line-height: 1.47;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh;
-    padding: 16px;
+    padding: 12px;
+    padding-bottom: max(24px, env(safe-area-inset-bottom));
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+    padding-top: max(12px, env(safe-area-inset-top));
+    touch-action: manipulation;
 }
 
 .container {
@@ -34,12 +39,13 @@ body {
 
 header {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 24px;
+    padding-top: 8px;
 }
 
 h1 {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    font-size: 34px;
+    font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.01em;
     margin-bottom: 4px;
@@ -47,16 +53,16 @@ h1 {
 }
 
 .subtitle {
-    font-size: 17px;
+    font-size: 15px;
     color: var(--text-muted);
     font-weight: 400;
 }
 
 h2 {
     font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     color: var(--text-primary);
     letter-spacing: -0.01em;
 }
@@ -64,14 +70,14 @@ h2 {
 .card {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 14px;
+    padding: 16px;
     box-shadow: var(--shadow-sm);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .form-group {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .form-group label {
@@ -84,8 +90,8 @@ h2 {
 
 .form-group input {
     width: 100%;
-    padding: 11px 14px;
-    font-size: 17px;
+    padding: 10px 12px;
+    font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     border: 1px solid var(--border-color);
     border-radius: 10px;
@@ -102,7 +108,7 @@ h2 {
 
 .btn-primary {
     width: 100%;
-    padding: 13px 20px;
+    padding: 12px 20px;
     font-size: 17px;
     font-weight: 600;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
@@ -112,6 +118,7 @@ h2 {
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .btn-primary:hover {
@@ -126,13 +133,15 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 16px;
-    gap: 12px;
+    margin-bottom: 12px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .header-actions {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
 }
 
 .btn-text {
@@ -142,8 +151,10 @@ h2 {
     font-size: 15px;
     font-weight: 400;
     cursor: pointer;
-    padding: 4px 8px;
+    padding: 4px 6px;
     transition: opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
 }
 
 .btn-text:hover {
@@ -161,13 +172,13 @@ h2 {
 .quick-actions {
     display: flex;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 .btn-quick {
     flex: 1;
-    padding: 12px;
-    font-size: 15px;
+    padding: 10px 8px;
+    font-size: 14px;
     font-weight: 500;
     background: var(--bg-primary);
     color: var(--text-primary);
@@ -175,6 +186,8 @@ h2 {
     border-radius: 10px;
     cursor: pointer;
     transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
 }
 
 .btn-quick:hover {
@@ -196,7 +209,7 @@ h2 {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 16px;
+    padding: 14px;
     box-shadow: var(--shadow-sm);
 }
 
@@ -204,23 +217,28 @@ h2 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
+    gap: 8px;
 }
 
 .record-date {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
+    flex: 1;
+    min-width: 0;
 }
 
 .btn-delete {
     background: none;
     border: none;
     color: var(--danger);
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     padding: 4px 8px;
     transition: opacity 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    flex-shrink: 0;
 }
 
 .btn-delete:hover {
@@ -233,7 +251,7 @@ h2 {
 
 .record-times {
     display: flex;
-    gap: 16px;
+    gap: 12px;
     margin-bottom: 8px;
 }
 
@@ -242,13 +260,13 @@ h2 {
 }
 
 .time-label {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-muted);
-    margin-bottom: 4px;
+    margin-bottom: 2px;
 }
 
 .time-value {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: var(--text-primary);
 }
@@ -256,19 +274,20 @@ h2 {
 .duration {
     display: inline-flex;
     align-items: center;
-    padding: 6px 12px;
+    padding: 5px 10px;
     background: rgba(0, 122, 255, 0.08);
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 500;
     color: var(--accent);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .record-note {
-    font-size: 15px;
+    font-size: 14px;
     color: var(--text-muted);
-    margin-top: 8px;
+    margin-top: 6px;
+    line-height: 1.4;
 }
 
 .empty-state {
@@ -288,7 +307,7 @@ h2 {
 }
 
 .stats-card {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     transition: opacity 0.3s;
 }
 
@@ -298,61 +317,139 @@ h2 {
 
 .stats-summary {
     display: flex;
-    gap: 12px;
-    margin-bottom: 24px;
+    gap: 8px;
+    margin-bottom: 16px;
 }
 
 .stat-item {
     flex: 1;
     text-align: center;
-    padding: 16px 12px;
+    padding: 12px 8px;
     background: var(--bg-primary);
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
 .stat-label {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-muted);
-    margin-bottom: 6px;
+    margin-bottom: 4px;
     font-weight: 400;
 }
 
 .stat-value {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     color: var(--accent);
 }
 
 .chart-container {
     position: relative;
-    height: 260px;
-    margin-top: 16px;
+    height: 220px;
+    margin-top: 12px;
 }
 
 .records-section {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
 }
 
 @media (max-width: 480px) {
+    body {
+        padding: 8px;
+        padding-bottom: 20px;
+    }
+
     h1 {
-        font-size: 28px;
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 14px;
+    }
+
+    header {
+        margin-bottom: 16px;
     }
 
     .card {
-        padding: 16px;
+        padding: 14px;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        font-size: 18px;
+        margin-bottom: 10px;
     }
 
     .record-times {
         flex-direction: column;
-        gap: 12px;
+        gap: 10px;
     }
 
     .stats-summary {
-        flex-direction: column;
-        gap: 8px;
+        gap: 6px;
+    }
+
+    .stat-item {
+        padding: 10px 6px;
+    }
+
+    .stat-label {
+        font-size: 11px;
+    }
+
+    .stat-value {
+        font-size: 18px;
     }
 
     .chart-container {
-        height: 220px;
+        height: 200px;
+    }
+
+    .section-header {
+        margin-bottom: 10px;
+    }
+
+    .header-actions {
+        gap: 4px;
+    }
+
+    .btn-text {
+        font-size: 14px;
+        padding: 4px;
+    }
+
+    .quick-actions {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .btn-quick {
+        font-size: 13px;
+        padding: 9px 6px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .btn-primary {
+        padding: 11px 16px;
+    }
+
+    .record-item {
+        padding: 12px;
+    }
+
+    .record-date {
+        font-size: 15px;
+    }
+
+    .time-value {
+        font-size: 16px;
+    }
+
+    .duration {
+        font-size: 13px;
+        padding: 4px 8px;
     }
 }
