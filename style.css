@@ -127,6 +127,12 @@ h2 {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 16px;
+    gap: 12px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
 }
 
 .btn-text {
@@ -146,6 +152,38 @@ h2 {
 
 .btn-text:active {
     opacity: 0.5;
+}
+
+.btn-text.danger {
+    color: var(--danger);
+}
+
+.quick-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.btn-quick {
+    flex: 1;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-quick:hover {
+    background: rgba(0, 122, 255, 0.08);
+    border-color: var(--accent);
+}
+
+.btn-quick:active {
+    transform: scale(0.98);
 }
 
 .records-list {
@@ -251,6 +289,11 @@ h2 {
 
 .stats-card {
     margin-bottom: 16px;
+    transition: opacity 0.3s;
+}
+
+.stats-card.hidden {
+    display: none;
 }
 
 .stats-summary {

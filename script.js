@@ -152,14 +152,18 @@ function clearAllRecords() {
 // 更新统计数据
 function updateStats() {
     const records = loadRecords();
+    const statsCard = document.querySelector('.stats-card');
 
     document.getElementById('totalRecords').textContent = records.length;
 
     if (records.length === 0) {
         document.getElementById('avgDuration').textContent = '0小时';
         document.getElementById('maxDuration').textContent = '0小时';
+        statsCard.classList.add('hidden');
         return;
     }
+
+    statsCard.classList.remove('hidden');
 
     let totalHours = 0;
     let maxHours = 0;
@@ -290,6 +294,83 @@ function updateChart() {
     });
 }
 
+// 快速记录入睡时间
+function quickSleep() {
+    const now = new Date();
+    document.getElementById('date').valueAsDate = now;
+    document.getElementById('sleepTime').value = now.toTimeString().slice(0, 5);
+    document.getElementById('wakeTime').value = '';
+    document.getElementById('sleepTime').focus();
+}
+
+// 快速记录醒来时间
+function quickWake() {
+    const now = new Date();
+    document.getElementById('wakeTime').value = now.toTimeString().slice(0, 5);
+    document.getElementById('wakeTime').focus();
+}
+
+// 导出数据
+function exportData() {
+    const records = loadRecords();
+    if (records.length === 0) {
+        alert('没有数据可以导出');
+        return;
+    }
+
+    const dataStr = JSON.stringify(records, null, 2);
+    const blob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `baby-sleep-records-${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+// 导入数据
+function importData() {
+    document.getElementById('fileInput').click();
+}
+
+// 处理文件导入
+function handleFileImport(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        try {
+            const importedRecords = JSON.parse(e.target.result);
+            if (!Array.isArray(importedRecords)) {
+                throw new Error('无效的数据格式');
+            }
+
+            const currentRecords = loadRecords();
+            const mergedRecords = [...currentRecords, ...importedRecords];
+
+            // 去重（基于日期和时间）
+            const uniqueRecords = mergedRecords.filter((record, index, self) =>
+                index === self.findIndex(r =>
+                    r.date === record.date &&
+                    r.sleepTime === record.sleepTime &&
+                    r.wakeTime === record.wakeTime
+                )
+            );
+
+            saveRecords(uniqueRecords);
+            renderRecords();
+            updateStats();
+            updateChart();
+            alert(`成功导入 ${importedRecords.length} 条记录！`);
+        } catch (error) {
+            alert('导入失败：' + error.message);
+        }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+}
+
 // 初始化
 document.addEventListener('DOMContentLoaded', function() {
     // 设置日期默认值为今天
@@ -297,6 +378,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 绑定表单提交事件
     document.getElementById('sleepForm').addEventListener('submit', addRecord);
+
+    // 绑定快速记录按钮
+    document.getElementById('quickSleep').addEventListener('click', quickSleep);
+    document.getElementById('quickWake').addEventListener('click', quickWake);
+
+    // 绑定导出导入按钮
+    document.getElementById('exportData').addEventListener('click', exportData);
+    document.getElementById('importData').addEventListener('click', importData);
+    document.getElementById('fileInput').addEventListener('change', handleFileImport);
 
     // 绑定清空按钮事件
     document.getElementById('clearAll').addEventListener('click', clearAllRecords);
