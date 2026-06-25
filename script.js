@@ -26,6 +26,19 @@ function calculateDuration(sleepTime, wakeTime, date) {
     return `${hours}小时${minutes}分钟`;
 }
 
+// 计算睡眠时长（小时数，用于统计）
+function calculateDurationInHours(sleepTime, wakeTime, date) {
+    const sleepDateTime = new Date(`${date}T${sleepTime}`);
+    let wakeDateTime = new Date(`${date}T${wakeTime}`);
+
+    if (wakeDateTime < sleepDateTime) {
+        wakeDateTime.setDate(wakeDateTime.getDate() + 1);
+    }
+
+    const diffMs = wakeDateTime - sleepDateTime;
+    return diffMs / (1000 * 60 * 60);
+}
+
 // 格式化日期显示
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -105,6 +118,8 @@ function addRecord(event) {
 
     saveRecords(records);
     renderRecords();
+    updateStats();
+    updateChart();
 
     // 清空表单
     document.getElementById('sleepForm').reset();
@@ -119,6 +134,8 @@ function deleteRecord(index) {
         records.splice(index, 1);
         saveRecords(records);
         renderRecords();
+        updateStats();
+        updateChart();
     }
 }
 
@@ -127,7 +144,141 @@ function clearAllRecords() {
     if (confirm('确定要清空所有记录吗？此操作不可恢复。')) {
         localStorage.removeItem('sleepRecords');
         renderRecords();
+        updateStats();
+        updateChart();
     }
+}
+
+// 更新统计数据
+function updateStats() {
+    const records = loadRecords();
+
+    document.getElementById('totalRecords').textContent = records.length;
+
+    if (records.length === 0) {
+        document.getElementById('avgDuration').textContent = '0小时';
+        document.getElementById('maxDuration').textContent = '0小时';
+        return;
+    }
+
+    let totalHours = 0;
+    let maxHours = 0;
+
+    records.forEach(record => {
+        const hours = calculateDurationInHours(record.sleepTime, record.wakeTime, record.date);
+        totalHours += hours;
+        maxHours = Math.max(maxHours, hours);
+    });
+
+    const avgHours = totalHours / records.length;
+    document.getElementById('avgDuration').textContent = `${avgHours.toFixed(1)}小时`;
+    document.getElementById('maxDuration').textContent = `${maxHours.toFixed(1)}小时`;
+}
+
+// 图表实例
+let sleepChart = null;
+
+// 更新图表
+function updateChart() {
+    const records = loadRecords();
+    const ctx = document.getElementById('sleepChart').getContext('2d');
+
+    // 按日期正序排序（最旧的在前）
+    const sortedRecords = [...records].sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+    });
+
+    // 只显示最近14天的数据
+    const recentRecords = sortedRecords.slice(-14);
+
+    const labels = recentRecords.map(record => {
+        const date = new Date(record.date);
+        return `${date.getMonth() + 1}/${date.getDate()}`;
+    });
+
+    const data = recentRecords.map(record => {
+        return calculateDurationInHours(record.sleepTime, record.wakeTime, record.date);
+    });
+
+    // 销毁旧图表
+    if (sleepChart) {
+        sleepChart.destroy();
+    }
+
+    // 创建新图表
+    sleepChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '睡眠时长（小时）',
+                data: data,
+                borderColor: '#3C5A78',
+                backgroundColor: 'rgba(60, 90, 120, 0.1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3,
+                pointRadius: 4,
+                pointHoverRadius: 6,
+                pointBackgroundColor: '#3C5A78',
+                pointBorderColor: '#FFFFFF',
+                pointBorderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    backgroundColor: '#1E2227',
+                    padding: 12,
+                    titleColor: '#FFFFFF',
+                    bodyColor: '#FFFFFF',
+                    borderColor: '#E7E3DA',
+                    borderWidth: 1,
+                    displayColors: false,
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.parsed.y.toFixed(1)} 小时`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: '#E7E3DA',
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#6B7077',
+                        font: {
+                            size: 12
+                        },
+                        callback: function(value) {
+                            return value + 'h';
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false,
+                        drawBorder: false
+                    },
+                    ticks: {
+                        color: '#6B7077',
+                        font: {
+                            size: 12
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
 
 // 初始化
@@ -143,4 +294,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // 渲染记录列表
     renderRecords();
+
+    // 更新统计和图表
+    updateStats();
+    updateChart();
 });
