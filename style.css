@@ -13,8 +13,12 @@
     --accent: #007AFF;
     --accent-hover: #0051D5;
     --danger: #FF3B30;
+    --success: #34C759;
+    --nap-color: #FF9500;
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
     --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+    --radius: 14px;
+    --radius-sm: 10px;
 }
 
 body {
@@ -48,7 +52,7 @@ h1 {
     font-size: 28px;
     font-weight: 700;
     letter-spacing: -0.01em;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     color: var(--text-primary);
 }
 
@@ -67,15 +71,172 @@ h2 {
     letter-spacing: -0.01em;
 }
 
+/* ========== Card ========== */
 .card {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
-    border-radius: 14px;
+    border-radius: var(--radius);
     padding: 16px;
     box-shadow: var(--shadow-sm);
     margin-bottom: 12px;
 }
 
+/* ========== Stats Summary ========== */
+.stats-summary {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 12px 8px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+}
+
+.stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+    font-weight: 400;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+}
+
+/* ========== Week Stats ========== */
+.week-stats {
+    margin-bottom: 14px;
+    padding: 12px;
+    background: var(--bg-primary);
+    border-radius: var(--radius-sm);
+}
+
+.week-stats-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.week-stats-grid {
+    display: flex;
+    gap: 8px;
+}
+
+.week-stat-item {
+    flex: 1;
+    text-align: center;
+}
+
+.week-stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.week-stat-value {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ========== Chart ========== */
+.chart-controls {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 12px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    padding: 2px;
+}
+
+.chart-period {
+    flex: 1;
+    padding: 6px 0;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chart-period.active {
+    background: var(--bg-surface);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.chart-container {
+    position: relative;
+    height: 220px;
+}
+
+/* ========== Sleep Type Selector ========== */
+.type-selector {
+    display: flex;
+    gap: 8px;
+}
+
+.type-option {
+    flex: 1;
+    cursor: pointer;
+}
+
+.type-option input {
+    display: none;
+}
+
+.type-option span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background: var(--bg-surface);
+    color: var(--text-muted);
+    transition: all 0.2s;
+}
+
+.type-option input:checked + span {
+    border-color: var(--accent);
+    background: rgba(0, 122, 255, 0.06);
+    color: var(--accent);
+}
+
+/* ========== Record Type Badge ========== */
+.type-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.type-badge.night {
+    background: rgba(0, 122, 255, 0.1);
+    color: var(--accent);
+}
+
+.type-badge.nap {
+    background: rgba(255, 149, 0, 0.12);
+    color: var(--nap-color);
+}
+
+/* ========== Form ========== */
 .form-group {
     margin-bottom: 12px;
 }
@@ -88,13 +249,15 @@ h2 {
     color: var(--text-muted);
 }
 
-.form-group input {
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="time"] {
     width: 100%;
     padding: 10px 12px;
     font-size: 16px;
     font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     background: var(--bg-surface);
     color: var(--text-primary);
     transition: all 0.2s;
@@ -106,6 +269,15 @@ h2 {
     box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.1);
 }
 
+.form-row.two-cols {
+    display: flex;
+    gap: 8px;
+}
+
+.form-row.two-cols .form-group {
+    flex: 1;
+}
+
 .btn-primary {
     width: 100%;
     padding: 12px 20px;
@@ -115,20 +287,43 @@ h2 {
     background: var(--accent);
     color: white;
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     transition: all 0.2s;
     -webkit-tap-highlight-color: transparent;
-}
-
-.btn-primary:hover {
-    background: var(--accent-hover);
 }
 
 .btn-primary:active {
     transform: scale(0.98);
 }
 
+/* ========== Quick Actions ========== */
+.quick-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.btn-quick {
+    flex: 1;
+    padding: 10px 8px;
+    font-size: 14px;
+    font-weight: 500;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+    white-space: nowrap;
+}
+
+.btn-quick:active {
+    transform: scale(0.98);
+}
+
+/* ========== Records Section ========== */
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -157,10 +352,6 @@ h2 {
     white-space: nowrap;
 }
 
-.btn-text:hover {
-    opacity: 0.7;
-}
-
 .btn-text:active {
     opacity: 0.5;
 }
@@ -169,48 +360,56 @@ h2 {
     color: var(--danger);
 }
 
-.quick-actions {
-    display: flex;
-    gap: 8px;
+.records-section {
     margin-bottom: 12px;
-}
-
-.btn-quick {
-    flex: 1;
-    padding: 10px 8px;
-    font-size: 14px;
-    font-weight: 500;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.2s;
-    -webkit-tap-highlight-color: transparent;
-    white-space: nowrap;
-}
-
-.btn-quick:hover {
-    background: rgba(0, 122, 255, 0.08);
-    border-color: var(--accent);
-}
-
-.btn-quick:active {
-    transform: scale(0.98);
 }
 
 .records-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state p {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.empty-hint {
+    font-size: 15px;
+    opacity: 0.8;
+}
+
+/* ========== Record Item ========== */
 .record-item {
     background: var(--bg-surface);
     border: 1px solid var(--border-color);
     border-radius: 12px;
     padding: 14px;
     box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.3s ease;
+}
+
+.record-item.removing {
+    animation: slideOut 0.25s ease forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideOut {
+    from { opacity: 1; transform: translateX(0); }
+    to { opacity: 0; transform: translateX(100%); }
 }
 
 .record-header {
@@ -229,24 +428,29 @@ h2 {
     min-width: 0;
 }
 
-.btn-delete {
-    background: none;
-    border: none;
-    color: var(--danger);
-    font-size: 14px;
-    cursor: pointer;
-    padding: 4px 8px;
-    transition: opacity 0.2s;
-    -webkit-tap-highlight-color: transparent;
+.record-actions {
+    display: flex;
+    gap: 4px;
     flex-shrink: 0;
 }
 
-.btn-delete:hover {
-    opacity: 0.7;
+.btn-icon {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 4px 6px;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.btn-delete:active {
+.btn-icon:active {
     opacity: 0.5;
+}
+
+.btn-icon.danger {
+    color: var(--danger);
 }
 
 .record-times {
@@ -271,185 +475,175 @@ h2 {
     color: var(--text-primary);
 }
 
+.record-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
 .duration {
     display: inline-flex;
     align-items: center;
-    padding: 5px 10px;
+    padding: 4px 10px;
     background: rgba(0, 122, 255, 0.08);
     border-radius: 8px;
     font-size: 14px;
     font-weight: 500;
     color: var(--accent);
-    margin-bottom: 6px;
 }
 
 .record-note {
     font-size: 14px;
     color: var(--text-muted);
+    width: 100%;
     margin-top: 6px;
     line-height: 1.4;
 }
 
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--text-muted);
-}
-
-.empty-state p {
-    font-size: 17px;
-    margin-bottom: 8px;
-}
-
-.empty-hint {
+/* ========== Toast ========== */
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
     font-size: 15px;
-    opacity: 0.8;
+    font-weight: 500;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: calc(100vw - 32px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
-.stats-card {
-    margin-bottom: 12px;
-    transition: opacity 0.3s;
+.toast.show {
+    transform: translateX(-50%) translateY(0);
 }
 
-.stats-card.hidden {
-    display: none;
+.toast-btn {
+    background: var(--accent);
+    border: none;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.stats-summary {
+/* ========== Dialog ========== */
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    padding: 32px;
+    animation: fadeIn 0.2s ease;
+}
+
+.dialog-box {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 24px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: var(--shadow-md);
+    animation: scaleIn 0.25s ease;
+}
+
+.dialog-box.full {
+    max-width: 420px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.dialog-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.dialog-message {
+    font-size: 15px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    text-align: center;
+    line-height: 1.4;
+}
+
+.dialog-actions {
     display: flex;
     gap: 8px;
+}
+
+.dialog-btn {
+    flex: 1;
+    padding: 11px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.dialog-btn:active {
+    transform: scale(0.97);
+}
+
+.dialog-btn.cancel {
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.dialog-btn.confirm {
+    background: var(--accent);
+    color: white;
+}
+
+.dialog-box.full .dialog-actions {
+    margin-top: 16px;
+}
+
+.dialog-box.full .dialog-title {
     margin-bottom: 16px;
 }
 
-.stat-item {
-    flex: 1;
-    text-align: center;
-    padding: 12px 8px;
-    background: var(--bg-primary);
-    border-radius: 10px;
-}
-
-.stat-label {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 4px;
-    font-weight: 400;
-}
-
-.stat-value {
-    font-size: 20px;
-    font-weight: 600;
-    color: var(--accent);
-}
-
-.chart-container {
-    position: relative;
-    height: 220px;
-    margin-top: 12px;
-}
-
-.records-section {
-    margin-bottom: 12px;
-}
-
+/* ========== Responsive ========== */
 @media (max-width: 480px) {
-    body {
-        padding: 8px;
-        padding-bottom: 20px;
-    }
-
-    h1 {
-        font-size: 24px;
-    }
-
-    .subtitle {
-        font-size: 14px;
-    }
-
-    header {
-        margin-bottom: 16px;
-    }
-
-    .card {
-        padding: 14px;
-        margin-bottom: 10px;
-    }
-
-    h2 {
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-
-    .record-times {
-        flex-direction: column;
-        gap: 10px;
-    }
-
-    .stats-summary {
-        gap: 6px;
-    }
-
-    .stat-item {
-        padding: 10px 6px;
-    }
-
-    .stat-label {
-        font-size: 11px;
-    }
-
-    .stat-value {
-        font-size: 18px;
-    }
-
-    .chart-container {
-        height: 200px;
-    }
-
-    .section-header {
-        margin-bottom: 10px;
-    }
-
-    .header-actions {
-        gap: 4px;
-    }
-
-    .btn-text {
-        font-size: 14px;
-        padding: 4px;
-    }
-
-    .quick-actions {
-        gap: 6px;
-        margin-bottom: 10px;
-    }
-
-    .btn-quick {
-        font-size: 13px;
-        padding: 9px 6px;
-    }
-
-    .form-group {
-        margin-bottom: 10px;
-    }
-
-    .btn-primary {
-        padding: 11px 16px;
-    }
-
-    .record-item {
-        padding: 12px;
-    }
-
-    .record-date {
-        font-size: 15px;
-    }
-
-    .time-value {
-        font-size: 16px;
-    }
-
-    .duration {
-        font-size: 13px;
-        padding: 4px 8px;
-    }
+    body { padding: 8px; padding-bottom: 20px; }
+    h1 { font-size: 24px; }
+    .subtitle { font-size: 14px; }
+    header { margin-bottom: 16px; }
+    .card { padding: 14px; margin-bottom: 10px; }
+    h2 { font-size: 18px; margin-bottom: 10px; }
+    .stat-value { font-size: 18px; }
+    .chart-container { height: 200px; }
+    .dialog-box { padding: 20px; }
+    .record-date { font-size: 15px; }
+    .time-value { font-size: 16px; }
 }

@@ -1,7 +1,7 @@
 {
   "name": "宝宝睡眠记录",
   "short_name": "睡眠记录",
-  "description": "记录宝宝每天的睡眠时间",
+  "description": "记录宝宝每天的睡眠时间，支持趋势统计",
   "start_url": "/baby-sleep-tracker/",
   "display": "standalone",
   "background_color": "#F2F2F7",

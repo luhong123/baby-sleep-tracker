@@ -14,10 +14,11 @@
 <body>
     <div class="container">
         <header>
-            <h1>宝宝睡眠记录</h1>
+            <h1>宝宝睡眠</h1>
             <p class="subtitle">记录宝宝每天的睡眠时光</p>
         </header>
 
+        <!-- 统计卡片 -->
         <div class="card stats-card">
             <h2>睡眠统计</h2>
             <div class="stats-summary">
@@ -34,11 +35,35 @@
                     <div class="stat-value" id="maxDuration">0小时</div>
                 </div>
             </div>
+            <div class="week-stats" id="weekStats" style="display:none;">
+                <div class="week-stats-title">本周概览</div>
+                <div class="week-stats-grid">
+                    <div class="week-stat-item">
+                        <div class="week-stat-label">本周天数</div>
+                        <div class="week-stat-value" id="weekDays">0天</div>
+                    </div>
+                    <div class="week-stat-item">
+                        <div class="week-stat-label">本周平均</div>
+                        <div class="week-stat-value" id="weekAvg">0小时</div>
+                    </div>
+                    <div class="week-stat-item">
+                        <div class="week-stat-label">夜间睡眠</div>
+                        <div class="week-stat-value" id="weekNight">0小时</div>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-controls">
+                <button class="chart-period active" data-period="7">7天</button>
+                <button class="chart-period" data-period="14">14天</button>
+                <button class="chart-period" data-period="30">30天</button>
+                <button class="chart-period" data-period="all">全部</button>
+            </div>
             <div class="chart-container">
                 <canvas id="sleepChart"></canvas>
             </div>
         </div>
 
+        <!-- 记录列表 -->
         <div class="records-section">
             <div class="section-header">
                 <h2>睡眠记录</h2>
@@ -56,6 +81,7 @@
             </div>
         </div>
 
+        <!-- 添加记录 -->
         <div class="card add-record-card">
             <h2>添加睡眠记录</h2>
             <form id="sleepForm">
@@ -65,23 +91,40 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="date">日期</label>
-                    <input type="date" id="date" required>
+                    <label>睡眠类型</label>
+                    <div class="type-selector">
+                        <label class="type-option">
+                            <input type="radio" name="sleepType" value="night" checked>
+                            <span>🌙 夜间睡眠</span>
+                        </label>
+                        <label class="type-option">
+                            <input type="radio" name="sleepType" value="nap">
+                            <span>☀️ 白天小睡</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="sleepTime">入睡时间</label>
-                    <input type="time" id="sleepTime" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">日期</label>
+                        <input type="date" id="date" required>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="wakeTime">醒来时间</label>
-                    <input type="time" id="wakeTime" required>
+                <div class="form-row two-cols">
+                    <div class="form-group">
+                        <label for="sleepTime">入睡时间</label>
+                        <input type="time" id="sleepTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="wakeTime">醒来时间</label>
+                        <input type="time" id="wakeTime" required>
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label for="note">备注（可选）</label>
-                    <input type="text" id="note" placeholder="例如：睡得很香，中间醒了一次">
+                    <input type="text" id="note" placeholder="睡得好吗？醒了几次？">
                 </div>
 
                 <button type="submit" class="btn-primary">保存记录</button>
@@ -89,7 +132,63 @@
         </div>
     </div>
 
-    <input type="file" id="fileInput" accept=".json" style="display: none;">
+    <!-- Toast 通知 -->
+    <div id="toast" class="toast"></div>
+
+    <!-- 确认弹窗 -->
+    <div id="dialogOverlay" class="dialog-overlay" style="display:none;">
+        <div class="dialog-box">
+            <div class="dialog-title" id="dialogTitle">确认</div>
+            <div class="dialog-message" id="dialogMessage">确定要执行此操作吗？</div>
+            <div class="dialog-actions">
+                <button class="dialog-btn cancel" id="dialogCancel">取消</button>
+                <button class="dialog-btn confirm" id="dialogConfirm">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 编辑弹窗 -->
+    <div id="editOverlay" class="dialog-overlay" style="display:none;">
+        <div class="dialog-box full">
+            <div class="dialog-title">编辑记录</div>
+            <form id="editForm">
+                <input type="hidden" id="editId">
+                <div class="form-group">
+                    <label>睡眠类型</label>
+                    <div class="type-selector">
+                        <label class="type-option">
+                            <input type="radio" name="editType" value="night" checked>
+                            <span>🌙 夜间睡眠</span>
+                        </label>
+                        <label class="type-option">
+                            <input type="radio" name="editType" value="nap">
+                            <span>☀️ 白天小睡</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-row two-cols">
+                    <div class="form-group">
+                        <label for="editSleepTime">入睡时间</label>
+                        <input type="time" id="editSleepTime" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editWakeTime">醒来时间</label>
+                        <input type="time" id="editWakeTime" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editNote">备注</label>
+                    <input type="text" id="editNote" placeholder="可选">
+                </div>
+                <div class="dialog-actions">
+                    <button type="button" class="dialog-btn cancel" id="editCancel">取消</button>
+                    <button type="submit" class="dialog-btn confirm">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".json" style="display:none;">
 
     <script src="script.js"></script>
 </body>
